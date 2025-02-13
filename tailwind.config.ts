@@ -12,6 +12,9 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      fontFamily: {
+        pixel: ['"Press Start 2P"', 'cursive'],
+      },
     },
   },
   plugins: [],

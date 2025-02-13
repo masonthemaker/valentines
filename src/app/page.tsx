@@ -1,101 +1,129 @@
-import Image from "next/image";
+'use client';
+
+import { GiHearts, GiNestedHearts } from "react-icons/gi";
+import { BsArrowThroughHeart } from "react-icons/bs";
+import { useEffect, useState } from "react";
+import Notepad from './components/notepad';
+import TaskList from './components/tasklist';
+
+interface Heart {
+  id: number;
+  x: number;
+  y: number;
+  icon: number;
+  size: number;
+  speed: number;
+}
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
+  const [hearts, setHearts] = useState<Heart[]>([]);
+  const [showEnvelope, setShowEnvelope] = useState(false);
+  const [isNotepadOpen, setIsNotepadOpen] = useState(false);
+  const [showTaskList, setShowTaskList] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
+  useEffect(() => {
+    const createHeart = () => {
+      const newHeart: Heart = {
+        id: Math.random(),
+        x: Math.random() * 100, // random position across screen width
+        y: -20, // start above screen
+        icon: Math.floor(Math.random() * 3), // randomly select one of three icons
+        size: Math.random() * (30 - 15) + 15, // random size between 15-30px
+        speed: Math.random() * (2 - 0.5) + 0.5, // random fall speed
+      };
+      setHearts(prev => [...prev, newHeart]);
+    };
+
+    // Create new heart every 300ms
+    const interval = setInterval(createHeart, 300);
+
+    // Update heart positions
+    const animationFrame = setInterval(() => {
+      setHearts(prev => 
+        prev
+          .map(heart => ({
+            ...heart,
+            y: heart.y + heart.speed,
+          }))
+          .filter(heart => heart.y < 120) // remove hearts that fall below screen
+      );
+    }, 16);
+
+    const timer = setTimeout(() => {
+      setShowEnvelope(true);
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+      clearInterval(animationFrame);
+      clearTimeout(timer);
+    };
+  }, []);
+
+  const getHeartIcon = (type: number) => {
+    switch(type) {
+      case 0:
+        return <GiHearts />;
+      case 1:
+        return <GiNestedHearts />;
+      default:
+        return <BsArrowThroughHeart />;
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-pink-100 overflow-hidden relative">
+      {!showTaskList ? (
+        <>
+          <div className="z-10">Hello World</div>
+          {showEnvelope && (
+            <div className="flex flex-col items-center">
+              <button 
+                onClick={() => setIsNotepadOpen(true)}
+                className="cursor-pointer transition-transform hover:scale-110"
+              >
+                <div className="font-pixel text-8xl text-pink-500 animate-bounce">
+                  💌
+                </div>
+              </button>
+              <div className="font-pixel text-2xl text-pink-500 mt-4">
+                you&apos;ve got mail from: Mason
+              </div>
+            </div>
+          )}
+          
+          <Notepad 
+            isOpen={isNotepadOpen}
+            onClose={() => setIsNotepadOpen(false)}
+            message="Dear Olivia,
+
+I heard you don't have a valentine...
+do you maybe want to be mine?
+
+Love,
+Mason"
+            onYesClick={() => setShowTaskList(true)}
           />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
+          
+          {hearts.map(heart => (
+            <div
+              key={heart.id}
+              className="absolute text-pink-500"
+              style={{
+                left: `${heart.x}vw`,
+                top: `${heart.y}vh`,
+                fontSize: `${heart.size}px`,
+                opacity: 0.7,
+                transform: `rotate(${Math.random() * 360}deg)`,
+              }}
+            >
+              {getHeartIcon(heart.icon)}
+            </div>
+          ))}
+        </>
+      ) : (
+        <TaskList />
+      )}
     </div>
   );
 }
