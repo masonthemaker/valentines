@@ -89,6 +89,12 @@ export default function Home() {
               <div className="font-pixel text-2xl text-pink-500 mt-4">
                 you&apos;ve got mail from: Mason
               </div>
+              <a 
+                href="/wall"
+                className="font-pixel mt-4 px-6 py-2 bg-pink-500 text-white rounded-full hover:bg-pink-600 transition-colors"
+              >
+                Skip to Wall
+              </a>
             </div>
           )}
           
