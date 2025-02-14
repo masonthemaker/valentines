@@ -16,8 +16,15 @@ interface Heart {
 
 export default function Wall() {
   const [hearts, setHearts] = useState<Heart[]>([]);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!isMounted) return;
+
     const createHeart = () => {
       const newHeart: Heart = {
         id: Math.random(),
@@ -46,7 +53,7 @@ export default function Wall() {
       clearInterval(interval);
       clearInterval(animationFrame);
     };
-  }, []);
+  }, [isMounted]);
 
   const getHeartIcon = (type: number) => {
     switch(type) {
@@ -96,7 +103,7 @@ export default function Wall() {
         </div>
       </div>
 
-      {hearts.map(heart => (
+      {isMounted && hearts.map(heart => (
         <div
           key={heart.id}
           className="absolute text-pink-500"
