@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import Confetti from 'react-confetti';
-import Image from 'next/image';
 
 interface NotepadProps {
   isOpen: boolean;
