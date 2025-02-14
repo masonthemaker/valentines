@@ -101,14 +101,6 @@ const Notepad: React.FC<NotepadProps> = ({ isOpen, onClose, message, onYesClick 
                 </button>
               )}
             </div>
-            <Image 
-              src="https://media.tenor.com/E6_SzGf9tucAAAAC/please-please-please.gif" 
-              alt="Please gif"
-              width={192}
-              height={192}
-              className="mt-4 border border-red-500"
-              onError={(e) => console.error('Image failed to load:', e)}
-            />
           </div>
         </div>
         

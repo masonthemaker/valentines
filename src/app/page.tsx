@@ -75,9 +75,8 @@ export default function Home() {
     <div className="min-h-screen flex items-center justify-center bg-pink-100 overflow-hidden relative">
       {!showTaskList ? (
         <>
-          <div className="z-10">Hello World</div>
           {showEnvelope && (
-            <div className="flex flex-col items-center">
+            <div className="absolute inset-0 flex flex-col items-center justify-center text-center">
               <button 
                 onClick={() => setIsNotepadOpen(true)}
                 className="cursor-pointer transition-transform hover:scale-110"
@@ -86,7 +85,7 @@ export default function Home() {
                   💌
                 </div>
               </button>
-              <div className="font-pixel text-2xl text-pink-500 mt-4">
+              <div className="font-pixel text-2xl text-pink-500 mt-4 text-center px-4">
                 you&apos;ve got mail from: Mason
               </div>
               <a 

@@ -71,7 +71,7 @@ export default function Wall() {
         <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 hover:scale-105 transform">
             <h3 className="text-lg font-medium text-pink-500 mb-2">Your Smile</h3>
-            <p className="text-gray-600">The way it lights up any room you enter ✨</p>
+            <p className="text-gray-600">It genuienly lights up any room you enter ✨</p>
           </div>
           <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 hover:scale-105 transform">
             <h3 className="text-lg font-medium text-pink-500 mb-2">Your Kindness</h3>
@@ -79,11 +79,11 @@ export default function Wall() {
           </div>
           <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 hover:scale-105 transform">
             <h3 className="text-lg font-medium text-pink-500 mb-2">Your Humor</h3>
-            <p className="text-gray-600">The way you make me laugh every day 😊</p>
+            <p className="text-gray-600">The way you make me laugh every day (with my jokes)😊</p>
           </div>
           <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 hover:scale-105 transform">
             <h3 className="text-lg font-medium text-pink-500 mb-2">Your Support</h3>
-            <p className="text-gray-600">Always there when I need you most 🤗</p>
+            <p className="text-gray-600">Always there when I need you most </p>
           </div>
           <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 hover:scale-105 transform">
             <h3 className="text-lg font-medium text-pink-500 mb-2">Your Passion</h3>

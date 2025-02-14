@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 interface Task {
   id: number;
@@ -9,6 +10,7 @@ interface Task {
 }
 
 export default function TaskList() {
+  const router = useRouter();
   const [tasks, setTasks] = useState<Task[]>([
     { id: 1, text: 'Romantic Dinner at a Fancy Restaurant', completed: false },
     { id: 2, text: 'Book a Cozy Hotel Stay', completed: false },
@@ -78,6 +80,13 @@ export default function TaskList() {
         <p className="mt-4 text-sm text-pink-600 italic text-center">
           *Don&apos;t forget to screenshot your finished list!
         </p>
+
+        <button
+          onClick={() => router.push('/wall')}
+          className="w-full mt-6 px-4 py-3 bg-pink-500 text-white rounded-lg hover:bg-pink-600 transition-colors font-semibold"
+        >
+          Done
+        </button>
       </div>
     </div>
   );
