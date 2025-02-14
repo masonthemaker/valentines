@@ -6,6 +6,7 @@ import {
   useTransform,
   PanInfo,
 } from "framer-motion";
+import Image from 'next/image';
 
 const IMGS: string[] = [
   
@@ -81,18 +82,18 @@ const RollingGallery: React.FC<RollingGalleryProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [autoplay]);
 
-  const handleUpdate = (latest: any) => {
+  const handleUpdate = (latest: { rotateY?: number }) => {
     if (typeof latest.rotateY === "number") {
       rotation.set(latest.rotateY);
     }
   };
 
-  const handleDrag = (_: any, info: PanInfo): void => {
+  const handleDrag = (_: never, info: PanInfo): void => {
     controls.stop();
     rotation.set(rotation.get() + info.offset.x * dragFactor);
   };
 
-  const handleDragEnd = (_: any, info: PanInfo): void => {
+  const handleDragEnd = (_: never, info: PanInfo): void => {
     const finalAngle = rotation.get() + info.velocity.x * dragFactor;
     rotation.set(finalAngle);
     if (autoplay) {
@@ -142,10 +143,12 @@ const RollingGallery: React.FC<RollingGalleryProps> = ({
                 transform: `rotateY(${(360 / faceCount) * i}deg) translateZ(${radius}px)`,
               }}
             >
-              <img
+              <Image
                 src={url}
                 alt="gallery"
-                className="pointer-events-none h-[200px] w-[300px] rounded-[15px] border-[3px] border-white object-cover transition-transform duration-300 ease-out group-hover:scale-105"
+                width={300}
+                height={200}
+                className="pointer-events-none rounded-[15px] border-[3px] border-white object-cover transition-transform duration-300 ease-out group-hover:scale-105"
               />
             </div>
           ))}
